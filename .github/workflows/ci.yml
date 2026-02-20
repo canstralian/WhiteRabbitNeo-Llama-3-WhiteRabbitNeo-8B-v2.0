@@ -86,4 +86,8 @@ jobs:
         run: huggingface-cli login --token $HF_TOKEN
 
       - name: Push to Hugging Face Spaces
-        run: huggingface-cli repo upload --repo-id <your_repo_id> --path . --force
+        run: |
+          huggingface-cli upload \
+            S-dreamer/WhiteRabbitNeo-Llama-3-WhiteRabbitNeo-8B-v2.0 \
+            . . \
+            --repo-type space
