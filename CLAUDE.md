@@ -208,7 +208,7 @@ pytest --cov=.
 
 | Issue | Location | Priority |
 |---|---|---|
-| `process_input()` called before definition | `app.py:54` | High (runtime bug under some conditions) |
+| `process_input()` called before definition | `app.py:54` | High (consistent runtime failure on "Run Model" click) |
 | PDF decoding fails on binary PDF bytes | `app.py:32` | High |
 | `requirements.txt` does not exist | repo root | High (breaks CI) |
 | No test files exist | repo root | High (breaks CI) |
