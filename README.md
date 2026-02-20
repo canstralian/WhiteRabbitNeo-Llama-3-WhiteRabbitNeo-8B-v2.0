@@ -64,10 +64,6 @@ Deployment Instructions
 	5.	Set environment variable:
 
 
-### **Installation Instructions**
-Provide detailed steps for setting up the repository locally. For example:
-
-```
 ## Installation
 
 1. Clone the repository:
@@ -92,10 +88,6 @@ Provide detailed steps for setting up the repository locally. For example:
      ```bash
      python -c "import torch; print(torch.cuda.is_available())"
      ```
-```
-
-### **Features**
-Expand on the key functionalities:
 
 - **Interactive Interface**: Real-time interaction with the Llama 3 model.
 - **Quantized Inference**: Optimize performance using 4-bit weights via `bitsandbytes`.
@@ -108,9 +100,6 @@ Details for each layer of the architecture (UI/Inference/Model Loading). Example
 The **model loading layer** applies `@st.cache_resource` to minimize reloads and enhance memory usage. Depending on configuration, the weights can be quantized prior to inference.
 ```
 
-### **Contributing**
-Provide contribution plans:
-```
 ## Contributing
 
 Contributions are welcome! Follow these steps:
@@ -129,6 +118,3 @@ Contributions are welcome! Follow these steps:
    git push origin feature/your-feature-name
    ```
 5. Submit a pull request.
-```
-
-Would you like assistance updating this directly in your repository?
