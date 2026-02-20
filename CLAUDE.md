@@ -23,7 +23,7 @@ WhiteRabbitNeo-Llama-3-WhiteRabbitNeo-8B-v2.0/
 │       ├── python-app.yml  # Matrix test across Python 3.8–3.11 and 3 OSes
 │       └── security.yml    # Bandit security scan
 ├── .gitattributes          # Git LFS tracking for ML binary file types
-├── README.md               # Hugging Face Space metadata + project docs
+├── README.md               # Hugging Face Space metadata + project documentation
 ├── app.py                  # Main Streamlit application (entry point)
 └── CLAUDE.md               # This file
 ```
