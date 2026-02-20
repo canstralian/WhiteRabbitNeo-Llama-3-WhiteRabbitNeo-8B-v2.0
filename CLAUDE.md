@@ -20,7 +20,7 @@ WhiteRabbitNeo-Llama-3-WhiteRabbitNeo-8B-v2.0/
 │   └── workflows/
 │       ├── ci.yml          # Full pipeline: CodeQL scan, lint, test, HF deploy
 │       ├── lint.yml        # Standalone flake8 linting
-│       ├── python-app.yml  # Matrix test across Python 3.8–3.11 and 3 OSes
+│       ├── python-app.yml  # Matrix test across Python 3.9–3.12 and 3 OSes
 │       └── security.yml    # Bandit security scan
 ├── .flake8                 # flake8 configuration (max-line-length=79)
 ├── .gitattributes          # Git LFS tracking for ML binary file types
@@ -98,7 +98,7 @@ All four workflows trigger on push/PR to `main`.
 
 ### `python-app.yml` — Cross-platform matrix
 
-Runs on Ubuntu, Windows, macOS × Python 3.8, 3.9, 3.10, 3.11 (12 combinations).
+Runs on Ubuntu, Windows, macOS × Python 3.9, 3.10, 3.11, 3.12 (12 combinations).
 
 Runs: flake8 → mypy → bandit → safety → pytest with coverage → Codecov upload.
 
@@ -177,7 +177,7 @@ pytest --cov=.
 
 ### Python style
 
-- Target **Python 3.8+** compatibility (the matrix tests 3.8–3.11)
+- Target **Python 3.9+** compatibility (the matrix tests 3.9–3.12; 3.8 is EOL and streamlit >=1.29 requires >=3.9)
 - Follow **PEP 8** — flake8 is enforced in CI with no custom exclusions configured yet
 - Use **type annotations** where practical (mypy runs in CI via `python-app.yml`)
 
