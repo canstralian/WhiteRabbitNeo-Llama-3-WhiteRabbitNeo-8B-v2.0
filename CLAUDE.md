@@ -179,7 +179,7 @@ pytest --cov=.
 
 - Target **Python 3.8+** compatibility (the matrix tests 3.8–3.11)
 - Follow **PEP 8** — flake8 is enforced in CI with no custom exclusions configured yet
-- Use **type annotations** where practical (mypy is planned)
+- Use **type annotations** where practical — `mypy` is already run in CI via `python-app.yml` (current placeholder paths/config may need adjustment)
 
 ### Streamlit patterns
 
