@@ -100,7 +100,7 @@ Runs on Ubuntu, Windows, macOS × Python 3.8, 3.9, 3.10, 3.11 (12 combinations).
 
 Runs: flake8 → mypy → bandit → safety → pytest with coverage → Codecov upload.
 
-**Known issue**: References `your_project` as the module path in `mypy` and `bandit` commands — replace with the actual module/directory name.
+**Known issue**: References `your_project` as the module path in `mypy` and `bandit` commands and in `pytest --cov=your_project` — replace all of these with the actual module/directory name.
 
 ### `lint.yml`
 
