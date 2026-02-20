@@ -120,9 +120,9 @@ Runs `bandit -r .` against the full repo. Requires `requirements.txt` to install
 
 ### LFS-tracked extensions
 
-`.7z .arrow .bin .bz2 .ckpt .ftz .gz .h5 .joblib .mlmodel .model .msgpack .npy .npz .onnx .ot .parquet .pb .pickle .pkl .pt .pth .rar .safetensors .tar .tflite .tgz .wasm .xz .zip .zst tfevents*`
+The authoritative list of Git LFS–tracked file patterns is defined in `.gitattributes`. Refer to that file for the exact patterns (for example, model weight files, archives, and training artifacts).
 
-When adding any of these files, ensure `git lfs install` has been run in the repo.
+When adding any files that match those patterns, ensure `git lfs install` has been run in the repo.
 
 ---
 
