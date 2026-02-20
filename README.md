@@ -62,3 +62,73 @@ Deployment Instructions
 	•	README.md
 	4.	(Optional but recommended) Enable persistent storage
 	5.	Set environment variable:
+
+
+### **Installation Instructions**
+Provide detailed steps for setting up the repository locally. For example:
+
+```
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/canstralian/WhiteRabbitNeo-Llama-3-WhiteRabbitNeo-8B-v2.0.git
+   cd WhiteRabbitNeo-Llama-3-WhiteRabbitNeo-8B-v2.0
+   ```
+
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Launch the app:
+   ```bash
+   streamlit run app.py
+   ```
+
+4. (Optional, Recommended) Ensure GPU acceleration:
+   - Install CUDA Toolkit [instructions link].
+   - Verify PyTorch GPU support:
+     ```bash
+     python -c "import torch; print(torch.cuda.is_available())"
+     ```
+```
+
+### **Features**
+Expand on the key functionalities:
+
+- **Interactive Interface**: Real-time interaction with the Llama 3 model.
+- **Quantized Inference**: Optimize performance using 4-bit weights via `bitsandbytes`.
+- **Caching**: Efficient resource reloading for faster runtime.
+
+### **How the Project Works**
+Details for each layer of the architecture (UI/Inference/Model Loading). Example:
+
+```
+The **model loading layer** applies `@st.cache_resource` to minimize reloads and enhance memory usage. Depending on configuration, the weights can be quantized prior to inference.
+```
+
+### **Contributing**
+Provide contribution plans:
+```
+## Contributing
+
+Contributions are welcome! Follow these steps:
+
+1. Fork this repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Commit changes:
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. Submit a pull request.
+```
+
+Would you like assistance updating this directly in your repository?
