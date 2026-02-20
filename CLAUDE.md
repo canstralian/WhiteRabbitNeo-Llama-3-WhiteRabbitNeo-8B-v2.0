@@ -6,7 +6,7 @@ This file provides context for AI coding assistants (Claude, Copilot, etc.) work
 
 ## Project Overview
 
-This is a **Hugging Face Spaces** application that hosts and showcases the **WhiteRabbitNeo Llama 3 WhiteRabbitNeo 8B v2.0** model. The frontend is built with **Streamlit** and deployed directly to Hugging Face Spaces via the platform's Git integration.
+This is a **Hugging Face Spaces** application that hosts and showcases the **WhiteRabbitNeo Llama 3 8B v2.0** model.
 
 The repository is currently in a **template/skeleton state**. The Streamlit UI scaffold and CI/CD pipelines exist, but the actual model integration in `app.py` is a placeholder that must be implemented.
 
