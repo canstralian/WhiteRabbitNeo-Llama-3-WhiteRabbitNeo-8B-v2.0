@@ -1,59 +1,64 @@
----
-title: WhiteRabbitNeo Llama 3 WhiteRabbitNeo 8B V2.0
-emoji: 🚀
-colorFrom: pink
-colorTo: gray
-sdk: streamlit
-sdk_version: 1.41.1
-app_file: app.py
-pinned: true
-thumbnail: >-
-  https://cdn-uploads.huggingface.co/production/uploads/64fbe312dcc5ce730e763dc6/D09x1B8RZP_tfYqg_rmhN.jpeg
+# WhiteRabbitNeo Llama 3 8B — Streamlit Interface
+
+An interactive Streamlit application for running the WhiteRabbitNeo Llama 3 8B model directly inside a Hugging Face Space.
+
+This project loads the model locally within the Space container and performs inference on GPU using PyTorch + Transformers.
+
 ---
 
-# WhiteRabbitNeo Llama 3 WhiteRabbitNeo 8B V2.0 🚀
+## Overview
 
-This Hugging Face Space showcases WhiteRabbitNeo Llama 3 WhiteRabbitNeo 8B V2.0, a [description of your project here].
+This application:
 
-**Getting Started**
+- Loads an 8B Llama 3 model at runtime
+- Supports 4-bit quantized inference (optional)
+- Uses Streamlit for the user interface
+- Runs fully inside a Hugging Face GPU Space
+- Caches the model to avoid reload on every interaction
 
-To play around with this Space, simply click on the "Run" button at the top. This will launch an interactive session where you can interact with the model.
+The architecture separates:
+- UI layer (Streamlit)
+- Model loading layer (cached resource)
+- Inference layer (generate function)
 
-**What it does**
+---
 
-[Provide a concise explanation of what your project does and how users can interact with it on the Space.]
+## Hardware Requirements
 
-**Model Details**
+Recommended:
 
-  * **Type:** [Specify the type of model (e.g., NLP, Computer Vision)]
-  * **Framework:** [Name of the deep learning framework used (e.g., TensorFlow, PyTorch)]
-  * **Size:** [Indicate the model size (e.g., parameters, FLOPs)]
+- GPU Space (T4 16GB minimum)
+- 24GB VRAM preferred for FP16 inference
+- Persistent storage enabled (recommended)
 
-**Technical Stack**
+CPU Spaces are not suitable for interactive 8B inference.
 
-  * **Frontend:** Streamlit ([link to Streamlit documentation](https://www.google.com/url?sa=E&source=gmail&q=https://docs.streamlit.io/))
-  * **Backend:** [List any backend libraries or frameworks used]
+---
 
-**Contributing**
+## Model Loading Strategy
 
-We welcome contributions to this Space\! If you have any improvements or suggestions, feel free to create a pull request on the underlying GitHub repository.
+The model is loaded once using:
 
-**License**
+```python
+@st.cache_resource
 
-This Space is licensed under the [License Name] license. You can find the full license details in the `LICENSE` file.
+This ensures:
+	•	No reload on UI interaction
+	•	Faster response after first initialization
+	•	Stable memory behavior during session lifecycle
 
-**Stay Connected**
+Optional 4-bit quantization is enabled via bitsandbytes.
 
-  * [Link to your GitHub repository (optional)]
-  * [Link to your website or blog (optional)]
+⸻
 
-**Additional Notes**
-
-  * [Include any other relevant information about your project or Space]
-
-**Remember to replace the bracketed placeholders with your specific details.**
-
-This README.md provides a comprehensive overview of your Hugging Face Space, including its purpose, functionality, technical details, and contribution guidelines. It also incorporates best practices for user engagement and clarity.
-
-
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+Deployment Instructions
+	1.	Create a new Hugging Face Space
+	2.	Select:
+	•	SDK: Streamlit
+	•	Hardware: GPU (T4 or higher)
+	3.	Upload:
+	•	app.py
+	•	requirements.txt
+	•	README.md
+	4.	(Optional but recommended) Enable persistent storage
+	5.	Set environment variable:
