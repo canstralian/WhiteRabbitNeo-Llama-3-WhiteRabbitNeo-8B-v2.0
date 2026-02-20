@@ -14,22 +14,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3
         with:
           languages: python
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3
 
   lint:
     name: Linting
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -74,7 +74,7 @@ jobs:
     needs: test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Hugging Face CLI
         run: |
@@ -86,4 +86,8 @@ jobs:
         run: huggingface-cli login --token $HF_TOKEN
 
       - name: Push to Hugging Face Spaces
-        run: huggingface-cli repo upload --repo-id <your_repo_id> --path . --force
+        run: |
+          huggingface-cli upload \
+            S-dreamer/WhiteRabbitNeo-Llama-3-WhiteRabbitNeo-8B-v2.0 \
+            . . \
+            --repo-type space
