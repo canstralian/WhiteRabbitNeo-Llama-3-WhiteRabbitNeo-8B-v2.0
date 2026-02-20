@@ -22,20 +22,23 @@ WhiteRabbitNeo-Llama-3-WhiteRabbitNeo-8B-v2.0/
 │       ├── lint.yml        # Standalone flake8 linting
 │       ├── python-app.yml  # Matrix test across Python 3.8–3.11 and 3 OSes
 │       └── security.yml    # Bandit security scan
+├── .flake8                 # flake8 configuration (max-line-length=79)
 ├── .gitattributes          # Git LFS tracking for ML binary file types
+├── .gitignore              # Excludes __pycache__, .pytest_cache, .env, etc.
 ├── README.md               # Hugging Face Space metadata + project documentation
 ├── app.py                  # Main Streamlit application (entry point)
+├── requirements.txt        # Python dependencies (streamlit, bandit)
+├── tests/
+│   ├── __init__.py
+│   └── test_app.py         # Smoke tests for process_input()
 └── CLAUDE.md               # This file
 ```
 
-### Missing files that CI/CD expects
+### Files still missing that CI/CD expects
 
 | File | Required by | Purpose |
 |---|---|---|
-| `requirements.txt` | `ci.yml`, `security.yml`, `python-app.yml` | Python dependency list |
-| `tests/` | `ci.yml`, `python-app.yml` | pytest test suite |
-| `.flake8` or `setup.cfg` | all lint workflows | flake8 configuration |
-| `mypy.ini` or `setup.cfg` | `python-app.yml` | mypy type checking config |
+| `mypy.ini` or `setup.cfg` | `python-app.yml` | mypy type checking config (currently uses `--ignore-missing-imports` flag) |
 
 ---
 
@@ -56,7 +59,6 @@ The Streamlit app (`app.py`) is the **only runtime file**. Hugging Face Spaces l
 1. Load the WhiteRabbitNeo model (likely via `transformers` or `llama-cpp-python`)
 2. Replace the `process_input()` stub with real inference
 3. Handle PDF file parsing (the uploader accepts PDFs but `getvalue().decode("utf-8")` will fail on binary PDF bytes — use `PyPDF2` or `pdfminer`)
-4. Move `process_input()` definition **above** the `st.button` call (it is currently referenced before definition — a Python runtime bug)
 
 ---
 
@@ -100,15 +102,13 @@ Runs on Ubuntu, Windows, macOS × Python 3.8, 3.9, 3.10, 3.11 (12 combinations).
 
 Runs: flake8 → mypy → bandit → safety → pytest with coverage → Codecov upload.
 
-**Known issue**: References `your_project` as the module path in `mypy` and `bandit` commands and in `pytest --cov=your_project` — replace all of these with the actual module/directory name.
-
 ### `lint.yml`
 
-Standalone flake8 run. Uses older `actions/checkout@v2` (consider upgrading to v4).
+Standalone flake8 run.
 
 ### `security.yml`
 
-Runs `bandit -r .` against the full repo. Requires `requirements.txt` to install deps first.
+Runs `bandit -r .` against the full repo. Installs from `requirements.txt` first (which includes `bandit`).
 
 ---
 
@@ -179,12 +179,12 @@ pytest --cov=.
 
 - Target **Python 3.8+** compatibility (the matrix tests 3.8–3.11)
 - Follow **PEP 8** — flake8 is enforced in CI with no custom exclusions configured yet
-- Use **type annotations** where practical — `mypy` is already run in CI via `python-app.yml` (current placeholder paths/config may need adjustment)
+- Use **type annotations** where practical (mypy runs in CI via `python-app.yml`)
 
 ### Streamlit patterns
 
 - All Streamlit calls must be at the **module top level** or inside callback functions; do not nest `st.*` calls inside loops that re-run unpredictably
-- Define all helper functions **before** they are called (the current `process_input()` placement on line 61 is a bug — in Streamlit it will raise a `NameError` when the button is pressed, because the function is defined after it is referenced)
+- Define all helper functions **before** they are called (`process_input()` is correctly defined at the top of `app.py` before any `st.*` calls that reference it)
 - Use `st.cache_resource` (not the deprecated `st.cache`) for model loading to avoid reloading on every interaction
 
 ### Security
@@ -208,13 +208,8 @@ pytest --cov=.
 
 | Issue | Location | Priority |
 |---|---|---|
-| `process_input()` called before definition | `app.py:54` | High (consistent runtime failure on "Run Model" click) |
-| PDF decoding fails on binary PDF bytes | `app.py:32` | High |
-| `requirements.txt` does not exist | repo root | High (breaks CI) |
-| No test files exist | repo root | High (breaks CI) |
-| HF deploy step has placeholder `<your_repo_id>` | `ci.yml:89` | High |
-| `your_project` placeholder in mypy/bandit/pytest-cov commands (incl. \`pytest --cov=your_project\`) | `python-app.yml` | Medium |
-| Model inference not implemented | `app.py:61-67` | Core feature |
-| Sidebar "About" section has placeholder text | `app.py:16-18` | Low |
+| HF deploy step has placeholder `<your_repo_id>` | `ci.yml:89` | High — replace with actual HF repo ID and set `HF_TOKEN` secret |
+| PDF decoding fails on binary PDF bytes | `app.py` | High — use `PyPDF2` or `pdfminer` instead of `.decode("utf-8")` |
+| Model inference not implemented | `app.py` | Core feature — replace `process_input()` stub with real model call |
+| `safety check` may fail on new vulnerability disclosures | `python-app.yml` | Medium — pin or audit deps regularly |
 | README placeholders not filled in | `README.md` | Low |
-| Older `actions/checkout@v2` in lint/security workflows | `lint.yml`, `security.yml` | Low |
