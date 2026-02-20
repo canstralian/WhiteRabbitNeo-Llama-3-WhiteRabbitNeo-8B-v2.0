@@ -184,7 +184,7 @@ pytest --cov=.
 ### Streamlit patterns
 
 - All Streamlit calls must be at the **module top level** or inside callback functions; do not nest `st.*` calls inside loops that re-run unpredictably
-- Define all helper functions **before** they are called (the current `process_input()` placement on line 61 is a bug — it works due to Python's button callback timing, but is fragile)
+- Define all helper functions **before** they are called (the current `process_input()` placement on line 61 is a bug — in Streamlit it will raise a `NameError` when the button is pressed, because the function is defined after it is referenced)
 - Use `st.cache_resource` (not the deprecated `st.cache`) for model loading to avoid reloading on every interaction
 
 ### Security
