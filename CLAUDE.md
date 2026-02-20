@@ -213,7 +213,7 @@ pytest --cov=.
 | `requirements.txt` does not exist | repo root | High (breaks CI) |
 | No test files exist | repo root | High (breaks CI) |
 | HF deploy step has placeholder `<your_repo_id>` | `ci.yml:89` | High |
-| `your_project` placeholder in mypy/bandit commands | `python-app.yml:46,49,55` | Medium |
+| `your_project` placeholder in mypy/bandit/pytest-cov commands (incl. \`pytest --cov=your_project\`) | `python-app.yml` | Medium |
 | Model inference not implemented | `app.py:61-67` | Core feature |
 | Sidebar "About" section has placeholder text | `app.py:16-18` | Low |
 | README placeholders not filled in | `README.md` | Low |
